@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2> Dimensions: {{ f_number }} X {{ s_number }} </h2>
+
+    <form method = "post" action="/calculated/" >{% csrf_token %} 
+        <table style = "border: 1px solid black;" border = 1>
+    
+    
+        {% for i in range_first %}
+
+            <tr>
+            {% for j in range_second %}
+                <td> <input type = "number" name = "{{ i }}{{ j }}"  max = "1000000000000000000" min = "-1000000000000000000"> </td>
+            {% endfor %}
+            </tr>
+
+        {% endfor %}
+        </table>
+
+        <input type = "Submit" value = "Determinant" name = "determinant">
+        <input type = "Submit" value = "Rank" name = "rank">
+
+        <li> Empty fields will be interpreted as 0. </li>
+
+        {% if result %}
+            <h2> Matrix {{ operation }} is {{ result }} . </h2>
+        {% endif %}
+
+        {% if messages %}
+
+        <ul class = "messages">
+
+            {% for message in messages  %}
+                <li> {{ message }} </li>            
+            {% endfor %}
+
+        </ul>
+
+        {% endif %}
+        
+
+    </form>
+
+{% endblock content %}
